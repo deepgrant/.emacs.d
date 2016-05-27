@@ -187,9 +187,13 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
 (defun my-c++-mode-hook ()
   (c-set-style "deep-style")
   (auto-fill-mode)
+  (c-toggle-auto-newline 0)
   (c-toggle-auto-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c++-mode-hook)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+
+
