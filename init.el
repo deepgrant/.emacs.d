@@ -1,9 +1,3 @@
-;; Make sure `emacs-leuven.el' is in your `load-path'.
-(add-to-list 'load-path "/Users/gmills/GIT/emacs-leuven")
-
-;; Require it as normal.
-(require 'emacs-leuven)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -22,10 +16,8 @@
  '(my-tab-face ((((class color)) (:foreground "white" :background "linen"))) t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq tab-width 8) ; or any other preferred value
+(setq tab-width 4) ; or any other preferred value
 (defvaralias 'c-basic-offset 'tab-width)
-
-
 
 ; add custom font locks to all buffers and all files
 (add-hook
@@ -100,100 +92,15 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
 
 (desktop-read)
 (setq desktop-enable t)
+(setq-default indent-tabs-mode nil)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(c-add-style "deep-style"
-	     '("k&r"
-	       (c-tab-always-indent . t)
-	       (c-basic-offset . 8)	; Guessed value
-	       (c-offsets-alist
-		(access-label . 0)	; Guessed value
-		(block-close . 0)	; Guessed value
-		(brace-list-close . 0)	; Guessed value
-		(brace-list-entry . 0)	; Guessed value
-		(brace-list-intro . +)	; Guessed value
-		(case-label . +)	; Guessed value
-		(class-close . 0)	; Guessed value
-		(defun-block-intro . +)	; Guessed value
-		(defun-close . 0)	; Guessed value
-		(inclass . +)		; Guessed value
-		(inline-close . 0)	; Guessed value
-		(innamespace . 0)	; Guessed value
-		(label . +)		; Guessed value
-		(member-init-cont . 0)	; Guessed value
-		(member-init-intro . +)	; Guessed value
-		(namespace-close . 0)	; Guessed value
-		(statement . 0)		; Guessed value
-		(statement-block-intro . +) ; Guessed value
-		(statement-case-intro . +)  ; Guessed value
-		(topmost-intro . 0)	    ; Guessed value
-		(topmost-intro-cont . 0)    ; Guessed value
-
-		; Base Values
-		(annotation-top-cont . 0)
-		(annotation-var-cont . +)
-		(arglist-close . c-lineup-close-paren)
-		(arglist-cont c-lineup-gcc-asm-reg 0)
-		(arglist-cont-nonempty . c-lineup-arglist)
-		(arglist-intro . +)
-		(block-open . 0)
-		(brace-entry-open . 0)
-		(brace-list-open . 0)
-		(c . c-lineup-C-comments)
-		(catch-clause . 0)
-		(class-open . 0)
-		(comment-intro . c-lineup-comment)
-		(composition-close . 0)
-		(composition-open . 0)
-		(cpp-define-intro c-lineup-cpp-define +)
-		(cpp-macro . -1000)
-		(cpp-macro-cont . +)
-		(defun-open . 0)
-		(do-while-closure . 0)
-		(else-clause . 0)
-		(extern-lang-close . 0)
-		(extern-lang-open . 0)
-		(friend . 0)
-		(func-decl-cont . +)
-		(incomposition . +)
-		(inexpr-class . +)
-		(inexpr-statement . +)
-		(inextern-lang . +)
-		(inher-cont . c-lineup-multi-inher)
-		(inher-intro . +)
-		(inlambda . c-lineup-inexpr-block)
-		(inline-open . +)
-		(inmodule . +)
-		(knr-argdecl . 0)
-		(knr-argdecl-intro . +)
-		(lambda-intro-cont . +)
-		(module-close . 0)
-		(module-open . 0)
-		(namespace-open . 0)
-		(objc-method-args-cont . c-lineup-ObjC-method-args)
-		(objc-method-call-cont c-lineup-ObjC-method-call-colons c-lineup-ObjC-method-call +)
-		(objc-method-intro .
-				   [0])
-		(statement-case-open . 0)
-		(statement-cont . +)
-		(stream-op . c-lineup-streamop)
-		(string . -1000)
-		(substatement . +)
-		(substatement-label . 2)
-		(substatement-open . +)
-		(template-args-cont c-lineup-template-args +)
-		)))
-
+(load-file "deepgrant-style.el")
 (defun my-c++-mode-hook ()
-  (c-set-style "deep-style")
+  (c-set-style "deepgrant-style")
   (auto-fill-mode)
-  (c-toggle-auto-newline 0)
   (c-toggle-auto-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c++-mode-hook)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-
-
