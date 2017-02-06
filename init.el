@@ -94,10 +94,11 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
 (setq desktop-enable t)
 (setq-default indent-tabs-mode nil)
 
-(load-file "deepgrant-style.el")
+(load-file "~/.emacs.d/deepgrant-style.el")
 (defun my-c++-mode-hook ()
   (c-set-style "deepgrant-style")
   (auto-fill-mode)
+  (c-toggle-auto-newline 0)
   (c-toggle-auto-hungry-state 1))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
