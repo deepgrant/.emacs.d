@@ -99,9 +99,14 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
   (c-set-style "deepgrant-style")
   (auto-fill-mode)
   (c-toggle-auto-newline 0)
-  (c-toggle-auto-hungry-state 1))
+  (c-toggle-auto-hungry-state 0))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c++-mode-hook)
 
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.gcc\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.gxx\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c-mode))
