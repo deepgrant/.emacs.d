@@ -4,6 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(custom-safe-themes
+   (quote
+    ("c158c2a9f1c5fcf27598d313eec9f9dceadf131ccd10abc6448004b14984767c" default)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -146,7 +149,7 @@ Return a list of installed packages or nil for every skipped package."
 ;; Styles, modes and themes.
 
 (ensure-package-installed
- `abyss-theme
+ 'abyss-theme
  'afternoon-theme
  'badwolf-theme
  'github-theme
@@ -154,6 +157,9 @@ Return a list of installed packages or nil for every skipped package."
  'leuven-theme
  'madhat2r-theme
  'reykjavik-theme)
+
+(package-initialize)
+(load-theme 'green-phosphor t)
 
 (setq-default indent-tabs-mode nil)
 
@@ -173,3 +179,17 @@ Return a list of installed packages or nil for every skipped package."
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Utilities
+
+(ensure-package-installed
+ 'sr-speedbar
+ 'google-maps
+ 'json-reformat
+ 'json-snatcher
+ 'json-mode
+ 'pylint
+ )
+
+(package-initialize)

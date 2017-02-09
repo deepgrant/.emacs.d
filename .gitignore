@@ -5,6 +5,8 @@
 .cask
 
 # Emacs
+\#*\#
 *.el~
 auto-save-list/
 elpa/
+url/
