@@ -136,13 +136,24 @@ Return a list of installed packages or nil for every skipped package."
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
-(ensure-package-installed 'scala-mode)
+(ensure-package-installed
+ 'scala-mode)
 
 ;; activate installed packages
 (package-initialize)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Styles and modes
+;; Styles, modes and themes.
+
+(ensure-package-installed
+ `abyss-theme
+ 'afternoon-theme
+ 'badwolf-theme
+ 'github-theme
+ 'green-phosphor-theme
+ 'leuven-theme
+ 'madhat2r-theme
+ 'reykjavik-theme)
 
 (setq-default indent-tabs-mode nil)
 
