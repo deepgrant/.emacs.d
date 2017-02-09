@@ -42,6 +42,13 @@
 (add-hook 'find-file-hook 'whitespace-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set window widthxheight 132x80
+
+(when window-system (set-frame-size (selected-frame) 132 70))
+(add-to-list 'default-frame-alist '(height . 70))
+(add-to-list 'default-frame-alist '(width . 132))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; transform literal tabs into a right-pointing triangle
 (setq
 whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
@@ -65,6 +72,15 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
         (t (self-insert-command (or arg 1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Untabify Buffer
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max))
+  (if (not (eq major-mode 'mew-draft-mode))
+      ;; delete-trailing-whitespace does not work in mew-draft-mode.
+      (delete-trailing-whitespace)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Autosave the desktop layout every 15 seconds
 (desktop-save-mode 1)
 
@@ -82,9 +98,9 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
 
 (setq desktop-buffers-not-to-save
       (concat "\\("
-	      "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-	      "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-	      "\\)$"))
+              "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+              "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
+              "\\)$"))
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
 (add-to-list 'desktop-modes-not-to-save 'Info-mode)
 (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
@@ -92,6 +108,42 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
 
 (desktop-read)
 (setq desktop-enable t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Third Party package installation. Melpa, Elpa.
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize)
+
+(defun ensure-package-installed (&rest packages)
+  "Assure every package is installed, ask for installation if it’s not.
+
+Return a list of installed packages or nil for every skipped package."
+  (mapcar
+   (lambda (package)
+     ;; (package-installed-p 'evil)
+     (if (package-installed-p package)
+         nil
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+           (package-install package)
+         package)))
+   packages))
+
+;; make sure to have downloaded archive description.
+;; Or use package-archive-contents as suggested by Nicolas Dudebout
+(or (file-exists-p package-user-dir)
+    (package-refresh-contents))
+
+(ensure-package-installed 'scala-mode)
+
+;; activate installed packages
+(package-initialize)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Styles and modes
+
 (setq-default indent-tabs-mode nil)
 
 (load-file "~/.emacs.d/deepgrant-style.el")
