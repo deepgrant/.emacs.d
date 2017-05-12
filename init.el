@@ -7,6 +7,9 @@
  '(custom-safe-themes
    (quote
     ("c158c2a9f1c5fcf27598d313eec9f9dceadf131ccd10abc6448004b14984767c" default)))
+ '(package-selected-packages
+   (quote
+    (fiplr pylint json-mode json-snatcher json-reformat google-maps sr-speedbar reykjavik-theme madhat2r-theme leuven-theme green-phosphor-theme github-theme badwolf-theme afternoon-theme abyss-theme scala-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -15,9 +18,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 98 :width normal))))
+ ;;'(default ((t (:family "Menlo" :foundry "unknown" :slant normal :weight normal :height 98 :width normal))))
  '(my-carriage-return-face ((((class color)) (:foreground "yellow" :background "red"))) t)
  '(my-tab-face ((((class color)) (:foreground "white" :background "linen"))) t))
+
+(set-default-font "Menlo 14")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq tab-width 4) ; or any other preferred value
@@ -143,8 +148,15 @@ Return a list of installed packages or nil for every skipped package."
 (ensure-package-installed
  'scala-mode)
 
+(ensure-package-installed
+ 'fiplr)
+
 ;; activate installed packages
 (package-initialize)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Fuzzy Finder
+(global-set-key (kbd "C-x f") 'fiplr-find-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Styles, modes and themes.
