@@ -9,7 +9,7 @@
     ("c158c2a9f1c5fcf27598d313eec9f9dceadf131ccd10abc6448004b14984767c" default)))
  '(package-selected-packages
    (quote
-    (fiplr pylint json-mode json-snatcher json-reformat google-maps sr-speedbar reykjavik-theme madhat2r-theme leuven-theme green-phosphor-theme github-theme badwolf-theme afternoon-theme abyss-theme scala-mode)))
+    (yaml-mode groovy-mode gradle-mode typescript-mode fiplr pylint json-mode json-snatcher json-reformat google-maps sr-speedbar reykjavik-theme madhat2r-theme leuven-theme green-phosphor-theme github-theme badwolf-theme afternoon-theme abyss-theme scala-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -89,11 +89,17 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
       (delete-trailing-whitespace)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Autosave the desktop layout every 15 seconds
-(desktop-save-mode 1)
+;; Killing Buffers
+(defun kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Autosave the desktop layout every 15 seconds
 (require 'desktop)
 (desktop-save-mode 1)
+
 (defun my-desktop-save ()
   (interactive)
   ;; Don't call desktop-save-in-desktop-dir, as it prints a message.
@@ -101,27 +107,25 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
       (desktop-save desktop-dirname)))
 (add-hook 'auto-save-hook 'my-desktop-save)
 
-(setq history-length 250)
+(setq history-length 1000)
 (add-to-list 'desktop-globals-to-save 'file-name-history)
 
-(setq desktop-buffers-not-to-save
-      (concat "\\("
-              "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-              "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-              "\\)$"))
+(setq desktop-buffers-not-to-save "^$")
+
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
 (add-to-list 'desktop-modes-not-to-save 'Info-mode)
 (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
 (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
 
 (desktop-read)
-(setq desktop-enable t)
+(setq desktop-save-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Third Party package installation. Melpa, Elpa.
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
@@ -149,6 +153,15 @@ Return a list of installed packages or nil for every skipped package."
 
 (ensure-package-installed
  'fiplr)
+
+(ensure-package-installed
+ 'gradle-mode)
+
+(ensure-package-installed
+ 'groovy-mode)
+
+(ensure-package-installed
+ 'yaml-mode)
 
 ;; activate installed packages
 (package-initialize)
@@ -205,6 +218,9 @@ Return a list of installed packages or nil for every skipped package."
  'json-snatcher
  'json-mode
  'pylint
+ 'typescript-mode
  )
 
 (package-initialize)
+
+(setq typescript-indent-level 2)
