@@ -6,10 +6,10 @@
  '(column-number-mode t)
  '(custom-safe-themes
    (quote
-    ("c158c2a9f1c5fcf27598d313eec9f9dceadf131ccd10abc6448004b14984767c" default)))
+    ("77bd459212c0176bdf63c1904c4ba20fce015f730f0343776a1a14432de80990" "15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" "130319ab9b4f97439d1b8fd72345ab77b43301cf29dddc88edb01e2bc3aff1e7" "1c656eb3f6ae6c84ced46282cb4ed697bffe2f6c764bb5a737ed7ca6d068f798" "2cfc1cab46c0f5bae8017d3603ea1197be4f4fff8b9750d026d19f0b9e606fae" "c158c2a9f1c5fcf27598d313eec9f9dceadf131ccd10abc6448004b14984767c" default)))
  '(package-selected-packages
    (quote
-    (yaml-mode groovy-mode gradle-mode typescript-mode fiplr pylint json-mode json-snatcher json-reformat google-maps sr-speedbar reykjavik-theme madhat2r-theme leuven-theme green-phosphor-theme github-theme badwolf-theme afternoon-theme abyss-theme scala-mode)))
+    (hemera-theme hemisu-theme flatui-theme ## yaml-mode groovy-mode gradle-mode typescript-mode fiplr pylint json-mode json-snatcher json-reformat google-maps sr-speedbar reykjavik-theme madhat2r-theme leuven-theme green-phosphor-theme github-theme badwolf-theme afternoon-theme abyss-theme github-modern-theme scala-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -96,6 +96,13 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bookmarks
+(require 'bookmark)
+(setq bookmark-save-flag 1)
+(bookmark-bmenu-list)
+(switch-to-buffer "*Bookmark List*")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Autosave the desktop layout every 15 seconds
 (require 'desktop)
 (desktop-save-mode 1)
@@ -106,6 +113,9 @@ whitespace-display-mappings ;http://ergoemacs.org/emacs/whitespace-mode.html
   (if (eq (desktop-owner) (emacs-pid))
       (desktop-save desktop-dirname)))
 (add-hook 'auto-save-hook 'my-desktop-save)
+
+(require 'saveplace)
+(setq-default save-place t)
 
 (setq history-length 1000)
 (add-to-list 'desktop-globals-to-save 'file-name-history)
@@ -184,10 +194,12 @@ Return a list of installed packages or nil for every skipped package."
  'green-phosphor-theme
  'leuven-theme
  'madhat2r-theme
- 'reykjavik-theme)
+ 'reykjavik-theme
+ 'github-modern-theme
+ 'flatui-theme)
 
 (package-initialize)
-(load-theme 'green-phosphor t)
+(load-theme 'github-modern t)
 
 (setq-default indent-tabs-mode nil)
 
@@ -224,3 +236,5 @@ Return a list of installed packages or nil for every skipped package."
 (package-initialize)
 
 (setq typescript-indent-level 2)
+
+(setq tramp-default-method "ssh")
